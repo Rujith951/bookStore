@@ -9,7 +9,9 @@ const app = Express();
 
 app.use(Express.json());
 
+/*
 app.use(loggerMiddleware);
+*/
 
 app.use("/books", bookRoutes);
 app.use("/authors", authorRoutes);
