@@ -1,0 +1,9 @@
+services:
+  postgres: # Must be indented 2 spaces
+    image: postgres:17.4
+    ports:
+      - "5434:5432" # Quoting ports is a "Senior" best practice
+    environment:
+      POSTGRES_DB: book-store
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
