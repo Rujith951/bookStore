@@ -25,17 +25,25 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
-	const { firstName, lastName, email } = req.body;
-	const [result] = await db
-		.insert(authorTable)
-		.values({
-			firstName,
-			lastName,
-			email,
-		})
-		.returning({ id: authorTable.id });
+	try {
+		const { firstName, lastName, secondName, email } = req.body;
+		if (!firstName || !email) {
+			return res.status(400).json({ error: "firstName and email are required" });
+		}
+		const [result] = await db
+			.insert(authorTable)
+			.values({
+				firstName,
+				secondName: secondName ?? lastName,
+				email,
+			})
+			.returning({ id: authorTable.id });
 
-	return res.json({ message: "Author has been created", id: result.id });
+		return res.status(201).json({ message: "Author has been created", id: result.id });
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({ error: err.message || "Failed to create author" });
+	}
 });
 
 router.get("/:id/books", async (req, res) => {
