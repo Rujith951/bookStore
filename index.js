@@ -22,7 +22,9 @@ app.use(Express.json());
 /*
 app.use(loggerMiddleware);
 */
-
+app.get("/health", (req, res) => {
+	res.send("ok");
+});
 app.use("/books", bookRoutes);
 app.use("/authors", authorRoutes);
 
